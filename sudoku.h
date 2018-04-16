@@ -189,6 +189,83 @@ private:
 		}
 	}
 
+	void Disorganize_1(int *Destination, int *Source, int length)
+	{
+		memset(Destination, 0, sizeof(int) * length);
+		for (int i = 0; i < length;)
+		{
+			int loc = random.Random(length);
+			if (Destination[loc] == 0)
+			{
+				Destination[loc] = Source[i++];
+			}
+		}
+	}
+
+	void Disorganize_2(int *Destination, int *Source, int length)
+	{
+		int Change_Number = 30;
+		memset(Destination, 0, sizeof(int) * length);
+		for (int i = 0; i < length; i++)
+		{
+			Destination[i] = Source[i];
+		}
+		for (int i = 0; i < Change_Number; i++)
+		{
+			int tmp1 = random.Random(length);
+			int tmp2 = random.Random(length);
+			int tmp3 = Destination[tmp1];
+			Destination[tmp1] = Destination[tmp2];
+			Destination[tmp2] = tmp3;
+		}
+	}
+
+	void Disorganize_3(int *Destination, int *Source, int length)
+	{
+		memset(Destination, 0, sizeof(int) * length);
+		for (int i = 0; i < length; i++)
+		{
+			int r = random.Random(length - i) + 1;
+			int loc = 0;
+			while (1)
+			{
+				if (Destination[loc] == 0)
+				{
+					r--;
+					if (r == 0) break;
+				}
+				loc++;
+			}
+			Destination[loc] = Source[i];
+		}
+	}
+
+	int HashList[10][7] =
+	{
+		1,0,0,0,0,0,0,
+		1,0,0,0,0,0,0,
+		1,1,0,0,0,0,0,
+		2,1,2,0,0,0,0,
+		2,1,3,0,0,0,0,
+		4,1,2,3,4,0,0,
+		2,1,5,0,0,0,0,
+		6,1,2,3,4,5,6,
+		4,1,3,5,7,0,0,
+		6,1,2,4,5,7,8,
+	};
+
+	void Disorganize_4(int *Destination, int *Source, int length)
+	{
+		memset(Destination, 0, sizeof(int) * length);
+		for (int i = 0; i < length; i++)
+		{
+			int loc = random.Random(length);
+			int HashCode = HashList[length][1 + random.Random(HashList[length][0])];
+			while (Destination[loc]) loc = (loc + HashCode) % length;
+			Destination[loc] = Source[i];
+		}
+	}
+
 	int Extract_Number(int row, int col)
 	{
 		int BitNumber = 0;
