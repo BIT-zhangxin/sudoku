@@ -73,8 +73,13 @@ public:
 				}
 				tmp[idx++] = '\n';
 			}
+			if (fgetc(fp1) == EOF)
+			{
+				tmp[idx - 1] = 0;
+				fputs(tmp, fp2);
+				break;
+			}
 			fputs(tmp, fp2);
-			if (fgetc(fp1) == EOF) break;
 			fputc('\n', fp2);
 		}
 		fclose(fp1);
